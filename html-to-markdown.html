@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>html-to-markdown</title>
+</head>
+<body>
+<div class="project-description"><h1>html-to-markdown</h1>
+    <p>A modern, fully typed Python library for converting HTML to Markdown. This library is a completely rewritten fork
+        of <a href="https://pypi.org/project/markdownify/" rel="nofollow">markdownify</a> with a modernized codebase,
+        strict type safety and support for
+        Python 3.9+.</p>
+    <h2>Features</h2>
+    <ul>
+        <li>Full type safety with strict MyPy adherence</li>
+        <li>Functional API design</li>
+        <li>Extensive test coverage</li>
+        <li>Configurable conversion options</li>
+        <li>CLI tool for easy conversions</li>
+        <li>Support for pre-configured BeautifulSoup instances</li>
+        <li>Strict semver versioning</li>
+    </ul>
+    <h2>Installation</h2>
+    <pre lang="shell">pip<span class="w"> </span>install<span class="w"> </span>html-to-markdown
+</pre>
+    <h2>Quick Start</h2>
+    <p>Convert HTML to Markdown with a single function call:</p>
+    <pre lang="python3"><span class="kn">from</span><span class="w"> </span><span
+            class="nn">html_to_markdown</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_to_markdown</span>
+
+<span class="n">html</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">&lt;article&gt;</span>
+<span class="s2">    &lt;h1&gt;Welcome&lt;/h1&gt;</span>
+<span class="s2">    &lt;p&gt;This is a &lt;strong&gt;sample&lt;/strong&gt; with a &lt;a href="https://example.com"&gt;link&lt;/a&gt;.&lt;/p&gt;</span>
+<span class="s2">    &lt;ul&gt;</span>
+<span class="s2">        &lt;li&gt;Item 1&lt;/li&gt;</span>
+<span class="s2">        &lt;li&gt;Item 2&lt;/li&gt;</span>
+<span class="s2">    &lt;/ul&gt;</span>
+<span class="s2">&lt;/article&gt;</span>
+<span class="s2">"""</span>
+
+<span class="n">markdown</span> <span class="o">=</span> <span class="n">convert_to_markdown</span><span
+                class="p">(</span><span class="n">html</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">markdown</span><span class="p">)</span>
+</pre>
+    <p>Output:</p>
+    <pre lang="markdown"><span class="gh"># Welcome</span>
+
+This is a <span class="gs">**sample**</span> with a [<span class="nt">link</span>](<span
+                class="na">https://example.com</span>).
+
+<span class="k">*</span><span class="w"> </span>Item 1
+<span class="k">*</span><span class="w"> </span>Item 2
+</pre>
+    <h3>Working with BeautifulSoup</h3>
+    <p>If you need more control over HTML parsing, you can pass a pre-configured BeautifulSoup instance:</p>
+    <pre lang="python3"><span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span
+            class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">html_to_markdown</span><span
+                class="w"> </span><span class="kn">import</span> <span class="n">convert_to_markdown</span>
+
+<span class="c1"># Configure BeautifulSoup with your preferred parser</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span
+                class="n">html</span><span class="p">,</span> <span class="s2">"lxml"</span><span
+                class="p">)</span>  <span class="c1"># Note: lxml requires additional installation</span>
+<span class="n">markdown</span> <span class="o">=</span> <span class="n">convert_to_markdown</span><span
+                class="p">(</span><span class="n">soup</span><span class="p">)</span>
+</pre>
+    <h2>Advanced Usage</h2>
+    <h3>Customizing Conversion Options</h3>
+    <p>The library offers extensive customization through various options:</p>
+    <pre lang="python3"><span class="kn">from</span><span class="w"> </span><span
+            class="nn">html_to_markdown</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_to_markdown</span>
+
+<span class="n">html</span> <span class="o">=</span> <span
+                class="s2">"&lt;div&gt;Your content here...&lt;/div&gt;"</span>
+<span class="n">markdown</span> <span class="o">=</span> <span class="n">convert_to_markdown</span><span
+                class="p">(</span>
+    <span class="n">html</span><span class="p">,</span>
+    <span class="n">heading_style</span><span class="o">=</span><span class="s2">"atx"</span><span
+                class="p">,</span>  <span class="c1"># Use # style headers</span>
+    <span class="n">strong_em_symbol</span><span class="o">=</span><span class="s2">"*"</span><span class="p">,</span>  <span
+                class="c1"># Use * for bold/italic</span>
+    <span class="n">bullets</span><span class="o">=</span><span class="s2">"*+-"</span><span class="p">,</span>  <span
+                class="c1"># Define bullet point characters</span>
+    <span class="n">wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span
+                class="c1"># Enable text wrapping</span>
+    <span class="n">wrap_width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>  <span
+                class="c1"># Set wrap width</span>
+    <span class="n">escape_asterisks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span
+                class="c1"># Escape * characters</span>
+    <span class="n">code_language</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span>  <span
+                class="c1"># Default code block language</span>
+<span class="p">)</span>
+</pre>
+    <h3>Custom Converters</h3>
+    <p>You can provide your own conversion functions for specific HTML tags:</p>
+    <pre lang="python3"><span class="kn">from</span><span class="w"> </span><span class="nn">bs4.element</span><span
+            class="w"> </span><span class="kn">import</span> <span class="n">Tag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">html_to_markdown</span><span
+                class="w"> </span><span class="kn">import</span> <span class="n">convert_to_markdown</span>
+
+<span class="c1"># Define a custom converter for the &lt;b&gt; tag</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">custom_bold_converter</span><span
+                class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span
+                class="p">:</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">text</span><span
+                class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span
+                class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span
+                class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"IMPORTANT: </span><span class="si">{</span><span
+                class="n">text</span><span class="si">}</span><span class="s2">"</span>
+
+<span class="n">html</span> <span class="o">=</span> <span class="s2">"&lt;p&gt;This is a &lt;b&gt;bold statement&lt;/b&gt;.&lt;/p&gt;"</span>
+<span class="n">markdown</span> <span class="o">=</span> <span class="n">convert_to_markdown</span><span
+                class="p">(</span><span class="n">html</span><span class="p">,</span> <span
+                class="n">custom_converters</span><span class="o">=</span><span class="p">{</span><span
+                class="s2">"b"</span><span class="p">:</span> <span class="n">custom_bold_converter</span><span
+                class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">markdown</span><span class="p">)</span>
+<span class="c1"># Output: This is a IMPORTANT: bold statement.</span>
+</pre>
+    <p>Custom converters take precedence over the built-in converters and can be used alongside other configuration
+        options.</p>
+    <h3>Configuration Options</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Option</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><code>autolinks</code></td>
+            <td>bool</td>
+            <td><code>True</code></td>
+            <td>Auto-convert URLs to Markdown links</td>
+        </tr>
+        <tr>
+            <td><code>bullets</code></td>
+            <td>str</td>
+            <td><code>'*+-'</code></td>
+            <td>Characters to use for bullet points</td>
+        </tr>
+        <tr>
+            <td><code>code_language</code></td>
+            <td>str</td>
+            <td><code>''</code></td>
+            <td>Default language for code blocks</td>
+        </tr>
+        <tr>
+            <td><code>heading_style</code></td>
+            <td>str</td>
+            <td><code>'underlined'</code></td>
+            <td>Header style (<code>'underlined'</code>, <code>'atx'</code>, <code>'atx_closed'</code>)</td>
+        </tr>
+        <tr>
+            <td><code>escape_asterisks</code></td>
+            <td>bool</td>
+            <td><code>True</code></td>
+            <td>Escape * characters</td>
+        </tr>
+        <tr>
+            <td><code>escape_underscores</code></td>
+            <td>bool</td>
+            <td><code>True</code></td>
+            <td>Escape _ characters</td>
+        </tr>
+        <tr>
+            <td><code>wrap</code></td>
+            <td>bool</td>
+            <td><code>False</code></td>
+            <td>Enable text wrapping</td>
+        </tr>
+        <tr>
+            <td><code>wrap_width</code></td>
+            <td>int</td>
+            <td><code>80</code></td>
+            <td>Text wrap width</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>For a complete list of options, see the <a href="#configuration" rel="nofollow">Configuration</a> section below.
+    </p>
+    <h2>CLI Usage</h2>
+    <p>Convert HTML files directly from the command line:</p>
+    <pre lang="shell"><span class="c1"># Convert a file</span>
+html_to_markdown<span class="w"> </span>input.html<span class="w"> </span>&gt;<span class="w"> </span>output.md
+
+<span class="c1"># Process stdin</span>
+cat<span class="w"> </span>input.html<span class="w"> </span><span class="p">|</span><span class="w"> </span>html_to_markdown<span
+                class="w"> </span>&gt;<span class="w"> </span>output.md
+
+<span class="c1"># Use custom options</span>
+html_to_markdown<span class="w"> </span>--heading-style<span class="w"> </span>atx<span class="w"> </span>--wrap<span
+                class="w"> </span>--wrap-width<span class="w"> </span><span class="m">100</span><span class="w"> </span>input.html<span
+                class="w"> </span>&gt;<span class="w"> </span>output.md
+</pre>
+    <p>View all available options:</p>
+    <pre lang="shell">html_to_markdown<span class="w"> </span>--help
+</pre>
+    <h2>Migration from Markdownify</h2>
+    <p>For existing projects using Markdownify, a compatibility layer is provided:</p>
+    <pre lang="python3"><span class="c1"># Old code</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">markdownify</span><span class="w"> </span><span
+                class="kn">import</span> <span class="n">markdownify</span> <span class="k">as</span> <span
+                class="n">md</span>
+
+<span class="c1"># New code - works the same way</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">html_to_markdown</span><span
+                class="w"> </span><span class="kn">import</span> <span class="n">markdownify</span> <span
+                class="k">as</span> <span class="n">md</span>
+</pre>
+    <p>The <code>markdownify</code> function is an alias for <code>convert_to_markdown</code> and provides identical
+        functionality.</p>
+    <h2>Configuration</h2>
+    <p>Full list of configuration options:</p>
+    <ul>
+        <li><code>autolinks</code>: Convert valid URLs to Markdown links automatically</li>
+        <li><code>bullets</code>: Characters to use for bullet points in lists</li>
+        <li><code>code_language</code>: Default language for fenced code blocks</li>
+        <li><code>code_language_callback</code>: Function to determine code block language</li>
+        <li><code>convert</code>: List of HTML tags to convert (None = all supported tags)</li>
+        <li><code>default_title</code>: Use default titles for elements like links</li>
+        <li><code>escape_asterisks</code>: Escape * characters</li>
+        <li><code>escape_misc</code>: Escape miscellaneous Markdown characters</li>
+        <li><code>escape_underscores</code>: Escape _ characters</li>
+        <li><code>heading_style</code>: Header style (underlined/atx/atx_closed)</li>
+        <li><code>keep_inline_images_in</code>: Tags where inline images should be kept</li>
+        <li><code>newline_style</code>: Style for handling newlines (spaces/backslash)</li>
+        <li><code>strip</code>: Tags to remove from output</li>
+        <li><code>strong_em_symbol</code>: Symbol for strong/emphasized text (* or _)</li>
+        <li><code>sub_symbol</code>: Symbol for subscript text</li>
+        <li><code>sup_symbol</code>: Symbol for superscript text</li>
+        <li><code>wrap</code>: Enable text wrapping</li>
+        <li><code>wrap_width</code>: Width for text wrapping</li>
+        <li><code>convert_as_inline</code>: Treat content as inline elements</li>
+        <li><code>custom_converters</code>: A mapping of HTML tag names to custom converter functions</li>
+    </ul>
+    <h2>Contribution</h2>
+    <p>This library is open to contribution. Feel free to open issues or submit PRs. Its better to discuss issues before
+        submitting PRs to avoid disappointment.</p>
+    <h3>Local Development</h3>
+    <ol>
+        <li>
+            <p>Clone the repo</p>
+        </li>
+        <li>
+            <p>Install the system dependencies</p>
+        </li>
+        <li>
+            <p>Install the full dependencies with <code>uv sync</code></p>
+        </li>
+        <li>
+            <p>Install the pre-commit hooks with:</p>
+            <pre lang="shell">pre-commit<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span
+                    class="w"> </span>pre-commit<span class="w"> </span>install<span class="w"> </span>--hook-type<span
+                    class="w"> </span>commit-msg
+</pre>
+        </li>
+        <li>
+            <p>Make your changes and submit a PR</p>
+        </li>
+    </ol>
+    <h2>License</h2>
+    <p>This library uses the MIT license.</p>
+    <h2>Acknowledgments</h2>
+    <p>Special thanks to the original <a href="https://pypi.org/project/markdownify/" rel="nofollow">markdownify</a>
+        project creators and contributors.</p>
+</div>
+</body>
+</html>
